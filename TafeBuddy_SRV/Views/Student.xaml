@@ -1,0 +1,120 @@
+﻿<Page
+    x:Class="TafeBuddy_SRV.Views.Student"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TafeBuddy_SRV.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
+            <AppBarButton
+                Label="Main Page"
+                Icon="Home" Foreground="White">
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <StackPanel>
+            <!--Header-->
+            <StackPanel Background="#FFBE1428" Padding="10" Orientation="Horizontal" BorderThickness="0,0,0,5" BorderBrush="Black"  >
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right"/>
+                <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Right" />
+            </StackPanel>
+
+
+            <!--Check my progress-->
+            <TextBlock x:Name="checkMyProgresstxtblk" TextWrapping="Wrap" Text="Check my Progress" FontSize="24" HorizontalAlignment="Center" Margin="0,50,0,0" FontWeight="Bold"/>
+
+            <!--Progress Bar-->
+            <controls:RadialProgressBar x:Name="myProgressBar" Value="70" Minimum="0" Maximum="100" Background="White" Thickness="14" Foreground="Black" Outline="Gray" Height="200" Width="200"/>
+
+
+            <!--Student Details-->
+            <StackPanel >
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <!--<RowDefinition Height="auto" />-->
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--StudentID-->
+                    <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
+                    <TextBox x:Name="studentIDtxtblk2" TextWrapping="Wrap" Text="001061267"  Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" IsReadOnly="True"/>
+
+                    <!--Student Name-->
+                    <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
+                    <TextBox x:Name="studNametxtblk2" Text="Kathryn Fieg"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" IsReadOnly="True"/>
+
+                    <!--Area of Study-->
+                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
+                    <!--<TextBox x:Name="areaOfStudtxtbk2" Text="Information Technology"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
+                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,5" PlaceholderText="Information Technology" ScrollViewer.VerticalScrollBarVisibility="Hidden">                    </ComboBox>
+
+                    <!--Qualification-->
+                    <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
+                    <!--<TextBox x:Name="qualificationtxtbkl2" TextWrapping="Wrap" Text="Diploma of Software Development"  Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" IsReadOnly="True"/>-->
+                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" PlaceholderText="Diploma of Software Development">
+                        <ComboBoxItem Content="Certificate I in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate II in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate III in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate IV in Digital Media Technologies" />
+                        <ComboBoxItem Content="Certificate IV in Program in Information Technology" />
+                        <ComboBoxItem Content="Certificate IV in Information Technology Networking" />
+                        <ComboBoxItem Content="Certificate IV in Cyber Security" />
+                        <ComboBoxItem Content="Certificate IV in Programming" />
+                        <ComboBoxItem Content="Certificate IV in Web-Based Technologies" />
+                        <ComboBoxItem Content="Diploma of Software Development" />
+                        <ComboBoxItem Content="Diploma of Information Technology Networking" />
+                        <ComboBoxItem Content="Diploma of Website Development" />
+                        <ComboBoxItem Content="Diploma of Digital Media Technologies" />
+                        <ComboBoxItem Content="Advanced Diploma in Computer Systems Technology" />
+                        <ComboBoxItem Content="Advanced Diploma in Network Security" />
+                    </ComboBox>
+
+                    <!--TAFE Code-->
+                    <TextBlock x:Name="tafeCodetxtblk" TextWrapping="Wrap" Text="TAFE Code:" Grid.Column="0" Grid.Row="4" FontWeight="Bold"/>
+                    <TextBox x:Name="tafeCodetxtblk2" TextWrapping="Wrap" Text="TP00750"  Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" IsReadOnly="True"/>
+
+                    <!--National Code-->
+                    <TextBlock x:Name="nationalCodetxtblk" TextWrapping="Wrap" Text="National Code:" Grid.Column="0" Grid.Row="5" FontWeight="Bold"/>
+                    <TextBox x:Name="nationalCodetxtblk2" TextWrapping="Wrap" Text="ICT50715"  Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" IsReadOnly="True"/>
+
+                    <!--Unit-->
+                    <TextBlock x:Name="unitstxtblk" TextWrapping="Wrap" Text="Units:" Grid.Column="0" Grid.Row="6" FontWeight="Bold"/>
+                    <TextBox x:Name="unitstxtblk2" TextWrapping="Wrap" Text="16 Units - 10 core, 6 electives"  Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" IsReadOnly="True"/>
+
+
+                </Grid>
+
+                <!--Buttons-->
+                <StackPanel Margin="0,20,0,0">
+                    <!--<Button x:Name="detailsButton" Content="My Competencies" HorizontalAlignment="Center" Width="160" Click="detailsButton_Click" />-->
+                    <HyperlinkButton Content="Click to view Checklist" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+        </StackPanel>
+
+    </Grid>
+</Page>

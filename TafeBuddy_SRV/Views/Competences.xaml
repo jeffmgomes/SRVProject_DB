@@ -1,0 +1,259 @@
+﻿<Page
+    x:Class="TafeBuddy_SRV.Views.Competences_Student"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TafeBuddy_SRV.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!--Page Bar-->
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
+            <AppBarButton
+                Label="Main Page"
+                Icon="Home" Foreground="White">
+            </AppBarButton>
+            <AppBarButton
+                x:Name="backBtn"
+                Label="Back"
+                Icon="Back" Foreground="White" >
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <StackPanel>
+            <!--Header-->
+            <StackPanel Background="#FFBE1428" Padding="10" Orientation="Horizontal" BorderThickness="0,0,0,5" BorderBrush="Black"  >
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right"/>
+                <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Right" />
+            </StackPanel>
+
+            <!--Title-->
+            <StackPanel Margin="0,20,0,20">
+                <TextBlock Text="My Competency Checklist" FontSize="24" HorizontalAlignment="Center" FontWeight="Bold" />
+            </StackPanel>
+
+            <!--Student Description-->
+            <StackPanel HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--StudentID-->
+                    <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
+                    <TextBlock x:Name="studentIDtxtblk2" TextWrapping="Wrap" Text="001061267"  Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" />
+
+                    <!--Student Name-->
+                    <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
+                    <TextBlock x:Name="studNametxtblk2" Text="Kathryn Fieg"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" />
+
+                    <!--Area of Study-->
+                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
+                    <!--<TextBox x:Name="areaOfStudtxtbk2" Text="Software Development"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
+                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Information Technology" >
+                        <ComboBoxItem Content="Arts and Design" />
+                        <ComboBoxItem Content="Building and Construction" />
+                        <ComboBoxItem Content="Business and Marketing" />
+                        <ComboBoxItem Content="Community Services" />
+                        <ComboBoxItem Content="Education and Languages" />
+                        <ComboBoxItem Content="Government, Property and Legal" />
+                        <ComboBoxItem Content="Hair and Beauty" />
+                        <ComboBoxItem Content="Health and Lifestyle" />
+                        <ComboBoxItem Content="Hospitality and Tourism" />
+                        <ComboBoxItem Content="Information Technology" />
+                        <ComboBoxItem Content="Mining, Engineering and Automotive" />
+                        <ComboBoxItem Content="Primary Industries and Science" />
+                    </ComboBox>
+
+                    <!--Qualification-->
+                    <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
+                    <!--<TextBox x:Name="qualificationtxtbkl2" TextWrapping="Wrap" Text="Diploma of Software Development"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
+                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Diploma of Software Development">
+                        <ComboBoxItem Content="Certificate I in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate II in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate III in Information, Digital Media and Technology" />
+                        <ComboBoxItem Content="Certificate IV in Digital Media Technologies" />
+                        <ComboBoxItem Content="Certificate IV in Program in Information Technology" />
+                        <ComboBoxItem Content="Certificate IV in Information Technology Networking" />
+                        <ComboBoxItem Content="Certificate IV in Cyber Security" />
+                        <ComboBoxItem Content="Certificate IV in Programming" />
+                        <ComboBoxItem Content="Certificate IV in Web-Based Technologies" />
+                        <ComboBoxItem Content="Diploma of Software Development" />
+                        <ComboBoxItem Content="Diploma of Information Technology Networking" />
+                        <ComboBoxItem Content="Diploma of Website Development" />
+                        <ComboBoxItem Content="Diploma of Digital Media Technologies" />
+                        <ComboBoxItem Content="Advanced Diploma in Computer Systems Technology" />
+                        <ComboBoxItem Content="Advanced Diploma in Network Security" />
+                    </ComboBox>
+
+                </Grid>
+            </StackPanel>
+
+
+            <ScrollViewer HorizontalAlignment="Center" Width="370" Height="400"  VerticalScrollBarVisibility="Hidden" Margin="0,20,0,10" >
+                <!--Height="400"-->
+                <StackPanel >
+
+                    <TextBlock TextWrapping="Wrap" Text="Core" FontWeight="Bold"  Margin="0,0,0,10" />
+                    <!--core-->
+                    <Grid BorderBrush="Black">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--header-->
+                        <!--header-->
+                        <StackPanel Background="#FFBE1428" Grid.Column="0" Grid.Row="0" />
+                        <StackPanel Background="#FFBE1428" Grid.Column="1" Grid.Row="0" Padding="0,5,0,5">
+                            <TextBlock Text="Code" TextWrapping="Wrap" Foreground="White" FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Background="#FFBE1428" Grid.Column="2" Grid.Row="0" Padding="0,5,0,5">
+                            <TextBlock Text="Name" TextWrapping="Wrap" Foreground="White" FontWeight="Bold" />
+                        </StackPanel>
+
+                        <!--0-->
+                        <CheckBox x:Name="ICTPRG501chkbox" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"  IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG501" Grid.Column="1" Grid.Row="1" />
+                        <TextBlock Text="Apply advanced object-oriented language skills" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" />
+
+                        <!--1-->
+                        <CheckBox x:Name="ICTPRG523chkbox" Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top"  IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTPRG523" Grid.Column="1" Grid.Row="2" />
+                        <TextBlock Text="Apply advanced programming skills in another language" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"/>
+
+                        <!--2-->
+                        <CheckBox x:Name="ICTPRG527chkbox" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Top" IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTPRG527" Grid.Column="1" Grid.Row="3" />
+                        <TextBlock Text="Apply intermediate object-oriented language skills" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"/>
+
+                        <!--3-->
+                        <CheckBox x:Name="ICTPRG418chkbox" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG418" Grid.Column="1" Grid.Row="4" />
+                        <TextBlock Text="Apply intermediate programming skills in another language" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap"/>
+
+                        <!--4-->
+                        <CheckBox x:Name="ICTPRG529chkbox" Grid.Column="0" Grid.Row="5"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG529" Grid.Column="1" Grid.Row="5" />
+                        <TextBlock Text="Apply testing techniques for software development" Grid.Column="2" Grid.Row="5" TextWrapping="Wrap"/>
+
+                        <!--5-->
+                        <CheckBox x:Name="ICTICT418chkbox" Grid.Column="0" Grid.Row="6"  VerticalAlignment="Top" IsHitTestVisible="False"  IsChecked="True" />
+                        <TextBlock Text="ICTICT418" Grid.Column="1" Grid.Row="6" />
+                        <TextBlock Text="Contribute to copyright, ethics and privacy in an ICT environment" Grid.Column="2" Grid.Row="6" TextWrapping="Wrap"/>
+
+                        <!--6-->
+                        <CheckBox x:Name="ICTPRG503chkbox" Grid.Column="0" Grid.Row="7"  VerticalAlignment="Top" IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTPRG503" Grid.Column="1" Grid.Row="7" />
+                        <TextBlock Text="Debug and monitor applications" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap"/>
+
+                        <!--7-->
+                        <CheckBox x:Name="ICTPRG504chkbox" Grid.Column="0" Grid.Row="8"  VerticalAlignment="Top" IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTPRG504" Grid.Column="1" Grid.Row="8" />
+                        <TextBlock Text="Deploy an application to a production environment" Grid.Column="2" Grid.Row="8" TextWrapping="Wrap"/>
+
+                        <!--8-->
+                        <CheckBox x:Name="ICTPRG502chkbox" Grid.Column="0" Grid.Row="9"  VerticalAlignment="Top" IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTPRG502" Grid.Column="1" Grid.Row="9" />
+                        <TextBlock Text="Manage a project using software management tools" Grid.Column="2" Grid.Row="9" TextWrapping="Wrap"/>
+
+                        <!--9-->
+                        <CheckBox x:Name="ICTPRG520chkbox" Grid.Column="0" Grid.Row="10"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG520" Grid.Column="1" Grid.Row="10" />
+                        <TextBlock Text="Validate an application design against specifications" Grid.Column="2" Grid.Row="10" TextWrapping="Wrap" />
+                    </Grid>
+
+                    <TextBlock TextWrapping="Wrap" Text="Electives" FontWeight="Bold" Margin="0,20,0,10" />
+                    <!--electives-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--header-->
+                        <StackPanel Background="#FFBE1428" Grid.Column="0" Grid.Row="0" />
+                        <StackPanel Background="#FFBE1428" Grid.Column="1" Grid.Row="0" Padding="0,5,0,5">
+                            <TextBlock Text="Code" TextWrapping="Wrap" Foreground="White" FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Background="#FFBE1428" Grid.Column="2" Grid.Row="0" Padding="0,5,0,5">
+                            <TextBlock Text="Name" TextWrapping="Wrap" Foreground="White" FontWeight="Bold" />
+                        </StackPanel>
+
+                        <!--0-->
+                        <CheckBox x:Name="ICTPRG505chkbox" Grid.Column="0" Grid.Row="1"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG505" Grid.Column="1" Grid.Row="1" />
+                        <TextBlock Text="Build advanced user interface" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" />
+
+                        <!--1-->
+                        <CheckBox x:Name="ICTPRG604chkbox" Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG604" Grid.Column="1" Grid.Row="2" />
+                        <TextBlock Text="Create cloud computing services" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap" />
+
+                        <!--2-->
+                        <CheckBox x:Name="ICTDBS502chkbox" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Top" IsHitTestVisible="False" IsChecked="True"/>
+                        <TextBlock Text="ICTDBS502" Grid.Column="1" Grid.Row="3" />
+                        <TextBlock Text="Design a database" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap" />
+
+                        <!--3-->
+                        <CheckBox x:Name="ICTPRG506chkbox" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPRG506" Grid.Column="1" Grid.Row="4" />
+                        <TextBlock Text="Design application architecture	" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap" />
+
+                        <!--4-->
+                        <CheckBox x:Name="ICTSAD505chkbox" Grid.Column="0" Grid.Row="5"  VerticalAlignment="Top"  IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTSAD505" Grid.Column="1" Grid.Row="5" />
+                        <TextBlock Text="Develop technical requirements for business solutions" Grid.Column="2" Grid.Row="5" TextWrapping="Wrap" />
+
+                        <!--5-->
+                        <CheckBox x:Name="ICTPMG609chkbox" Grid.Column="0" Grid.Row="6"  VerticalAlignment="Top" IsHitTestVisible="False"/>
+                        <TextBlock Text="ICTPMG609" Grid.Column="1" Grid.Row="6" />
+                        <TextBlock Text="Plan and direct complex ICT projects" Grid.Column="2" Grid.Row="6" TextWrapping="Wrap" />
+                    </Grid>
+
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+
+
+        </StackPanel>
+    </Grid>
+</Page>
