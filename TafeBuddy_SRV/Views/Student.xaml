@@ -65,27 +65,13 @@
                     <!--Area of Study-->
                     <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
                     <!--<TextBox x:Name="areaOfStudtxtbk2" Text="Information Technology"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,5" PlaceholderText="Information Technology" ScrollViewer.VerticalScrollBarVisibility="Hidden">                    </ComboBox>
+                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,5" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="AreaOfStudcomboBox_SelectionChanged">                    </ComboBox>
 
                     <!--Qualification-->
                     <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
                     <!--<TextBox x:Name="qualificationtxtbkl2" TextWrapping="Wrap" Text="Diploma of Software Development"  Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" PlaceholderText="Diploma of Software Development">
-                        <ComboBoxItem Content="Certificate I in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate II in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate III in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate IV in Digital Media Technologies" />
-                        <ComboBoxItem Content="Certificate IV in Program in Information Technology" />
-                        <ComboBoxItem Content="Certificate IV in Information Technology Networking" />
-                        <ComboBoxItem Content="Certificate IV in Cyber Security" />
-                        <ComboBoxItem Content="Certificate IV in Programming" />
-                        <ComboBoxItem Content="Certificate IV in Web-Based Technologies" />
-                        <ComboBoxItem Content="Diploma of Software Development" />
-                        <ComboBoxItem Content="Diploma of Information Technology Networking" />
-                        <ComboBoxItem Content="Diploma of Website Development" />
-                        <ComboBoxItem Content="Diploma of Digital Media Technologies" />
-                        <ComboBoxItem Content="Advanced Diploma in Computer Systems Technology" />
-                        <ComboBoxItem Content="Advanced Diploma in Network Security" />
+                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="ComboBox_SelectionChanged">
+                         
                     </ComboBox>
 
                     <!--TAFE Code-->
