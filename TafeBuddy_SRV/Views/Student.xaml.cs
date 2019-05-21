@@ -32,7 +32,7 @@ namespace TafeBuddy_SRV.Views
         public void ConnectDB() {
 
             // Creates the connection
-            MySqlConnection conn = new MySqlConnection("server = localhost; user id = root; password = mysql; database = srvdb");
+            MySqlConnection conn = new MySqlConnection(App.connectionString);
             // Creates the SQL command
             MySqlCommand command = new MySqlCommand("SELECT * FROM AreasOfStudy", conn);
 

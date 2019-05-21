@@ -146,6 +146,7 @@
     <None Include="TafeBuddy_SRV_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Background.png" />
     <Content Include="Images\bg1.jpg" />
     <Content Include="Images\bg2.png" />
     <Content Include="Images\logo1.png" />
