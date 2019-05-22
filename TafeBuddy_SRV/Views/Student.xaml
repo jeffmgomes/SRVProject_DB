@@ -14,7 +14,7 @@
         <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
             <AppBarButton
                 Label="Main Page"
-                Icon="Home" Foreground="White">
+                Icon="Home" Foreground="White" Click="AppBarButton_Click">
             </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
@@ -92,7 +92,7 @@
                 <!--Buttons-->
                 <StackPanel Margin="0,20,0,0">
                     <!--<Button x:Name="detailsButton" Content="My Competencies" HorizontalAlignment="Center" Width="160" Click="detailsButton_Click" />-->
-                    <HyperlinkButton Content="Click to view Checklist" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                    <HyperlinkButton Content="Click to view Checklist" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="HyperlinkButton_Click" />
 
                 </StackPanel>
 

@@ -19,7 +19,8 @@ using System.Text;
 
 namespace TafeBuddy_SRV.Views
 {
-    struct Item
+    // Class created to handle the object in the ComboBox
+    class Item
     {
         public string Id;
         public string Value;
@@ -30,7 +31,7 @@ namespace TafeBuddy_SRV.Views
         }
         public override string ToString()
         {
-            return Value;
+            return Value; // The ComboBox actually uses the ToString method to display the text in the control
         }
     }
     /// <summary>
@@ -39,6 +40,7 @@ namespace TafeBuddy_SRV.Views
     public sealed partial class Student : Page
     {
         private string User;
+        private static string StudentID;
         public Student()
         {
             this.InitializeComponent();
@@ -53,8 +55,10 @@ namespace TafeBuddy_SRV.Views
             PopulateQualification();
             PopulateUser();
 
-            areaOfStudcomboBox.SelectedIndex = 0;
-            comboBox.SelectedIndex = 0;
+            areaOfStudcomboBox.SelectedIndex = 0; // Select the first item the list
+            comboBox.SelectedIndex = 0; // Select the first item in the list
+
+            StudentResult();
         }
 
         public void PopulateAreasOfStudy()
@@ -99,7 +103,6 @@ namespace TafeBuddy_SRV.Views
 
         public void PopulateQualification(string area = "")
         {
-
             // Creates the connection
             MySqlConnection conn = new MySqlConnection(App.connectionString);
 
@@ -130,7 +133,6 @@ namespace TafeBuddy_SRV.Views
             // While there are rows in the read
             while (dr.Read())
             {
-                //Combo c = new Combo { id = dr.GetString("QualificationID"), value = dr.GetString("NationalTitle") };
                 // Add an item in the Combobox
                 comboBox.Items.Add(new Item(dr.GetString("QualificationID"), dr.GetString("NationalTitle")));
             }
@@ -155,6 +157,7 @@ namespace TafeBuddy_SRV.Views
             // While there are rows in the read
             while (dr.Read())
             {
+                StudentID = dr.GetString("StudentID"); // Stores the StudentID to use in the Competences page
                 studentIDtxtblk2.Text = dr.GetString("Login");
                 studNametxtblk2.Text = dr.GetString("FirstName") + " " + dr.GetString("LastName");
             }
@@ -163,15 +166,17 @@ namespace TafeBuddy_SRV.Views
             conn.Close();
         }
 
-        public void PopulateQualInfo(string QualificationID)
+        public void PopulateQualInfo(string qualID)
         {
             // Creates the connection
             MySqlConnection conn = new MySqlConnection(App.connectionString);
 
             StringBuilder sb = new StringBuilder();
             sb.Append("select * from qualification p ");
-            sb.Append("WHERE qualificationID = '").Append(QualificationID).Append("'; ");
-            sb.Append("select * from `release` where releaseid = (SELECT MAX(releaseid) FROM qualification_release_comp WHERE qualificationid = '" + QualificationID + "'); ");
+            sb.Append("WHERE qualificationID = '").Append(qualID).Append("' ");
+            sb.Append("; ");
+            sb.Append("select * from `release` ");
+            sb.Append(" where releaseid = (SELECT MAX(releaseid) FROM qualification_release_comp WHERE qualificationid = '" + qualID + "'); ");
 
             // Creates the SQL command
             MySqlCommand command = new MySqlCommand(sb.ToString(), conn);
@@ -202,6 +207,56 @@ namespace TafeBuddy_SRV.Views
             conn.Close();
         }
 
+        public void StudentResult() {
+            // Creates the connection
+            MySqlConnection conn = new MySqlConnection(App.connectionString);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT s.StudentID, s.Login, p.FirstName, p.LastName, q.nationaltitle, c.nationalcode, c.`description`, IF(qrc.iscore = 1, 'Core', 'Elective') AS 'Type', c.tafecode AS 'Subject', IF(ISNULL(sce.nationalcode), 'Not Enrolled', IF(ISNULL(sce.Result),'No Result',sce.Result)) AS 'Situation' ");
+            sb.Append("FROM qualification_release_comp qrc ");
+            sb.Append("INNER JOIN qualification q ON qrc.qualificationid = q.qualificationid ");
+            sb.Append("INNER JOIN `release` r ON qrc.releaseid = r.releaseid ");
+            sb.Append("INNER JOIN competence c ON qrc.nationalcode = c.nationalcode ");
+            sb.Append("LEFT JOIN  student_competences_enroll sce ON qrc.nationalcode = sce.nationalcode ");
+            sb.Append("AND sce.studentid = '").Append(StudentID).Append("' ");
+            sb.Append("LEFT JOIN  student s ON sce.studentid = s.studentid ");
+            sb.Append("LEFT JOIN  person p ON s.personid = p.personid ");
+            sb.Append("WHERE q.qualificationid = '").Append(((Item)comboBox.SelectedItem).Id).Append("' ");
+            sb.Append("AND r.releaseid = (SELECT MAX(releaseid) FROM qualification_release_comp ");
+            sb.Append(" WHERE qualificationid = '").Append(((Item)comboBox.SelectedItem).Id).Append("') ");
+            sb.Append("ORDER BY q.qualificationid , `type`; ");
+
+
+            // Creates the SQL command
+            MySqlCommand command = new MySqlCommand(sb.ToString(), conn);
+
+            MySqlDataReader dr; // Creates a reader to read the data
+
+            conn.Open(); // Open the connection
+
+            dr = command.ExecuteReader(); // Execute the command and attach to the reader
+
+            int rowsCount = 0;
+            int marked = 0;
+            // While there are rows in the read
+            while (dr.Read())
+            {
+                rowsCount += 1;
+                string situation = dr.GetString("Situation");
+                if (situation == "Pass") {
+                    marked += 1;
+                }                
+            }
+
+            // Close the connection
+            conn.Close();
+
+            // Calculates the Percentage
+            double percent = 0;
+            percent = ((double)marked / (double)rowsCount) * 100;
+            myProgressBar.Value = percent; // Updates the progressbar value
+        }
+
         private void AreaOfStudcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PopulateQualification(((Item)areaOfStudcomboBox.SelectedItem).Id);
@@ -210,6 +265,17 @@ namespace TafeBuddy_SRV.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PopulateQualInfo(((Item)comboBox.SelectedItem).Id);
+            StudentResult();
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Login));
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Competences),new string[] {StudentID, ((Item)comboBox.SelectedItem).Id });
         }
     }
 }

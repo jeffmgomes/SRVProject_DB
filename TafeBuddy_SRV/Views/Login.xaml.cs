@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -38,49 +39,59 @@ namespace TafeBuddy_SRV.Views
         private UserType LoginUser(string user, string pass) {
             // Creates the connection
             MySqlConnection conn = new MySqlConnection(App.connectionString);
+
+            // Construct the SELECT statement
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT * FROM Person p INNER JOIN Student s ON p.personid = s.personid ");
+            sb.Append(" WHERE p.Email = '").Append(user).Append("' ");
+            sb.Append(" OR s.Login = '").Append(user).Append("' ");
+            sb.Append("; "); // Note that there are TWO select statement in the same string. Use the semi-colon to split them
+            sb.Append("SELECT * FROM Person p INNER JOIN Staff s ON p.personid = s.personid ");
+            sb.Append(" WHERE p.Email = '").Append(user).Append("' ");
+            sb.Append(" OR s.Login = '").Append(user).Append("' ");
+            sb.Append("; ");
+
+
             // Creates the SQL commands
-            MySqlCommand getStudent = new MySqlCommand("SELECT * FROM Person p INNER JOIN Student s ON p.personid = s.personid WHERE p.Email = '"+user+"' OR s.Login = '"+user+"'", conn);
-            MySqlCommand getStaff = new MySqlCommand("SELECT * FROM Person p INNER JOIN Staff s ON p.personid = s.personid WHERE p.Email = '" + user + "' OR s.Login = '" + user + "'", conn);
+            MySqlCommand command = new MySqlCommand(sb.ToString(), conn);
 
-            MySqlDataReader drStudent; // Creates a reader to read the data
-            MySqlDataReader drStaff; // Creates a reader to read the data
-
+            MySqlDataReader dr; // Creates a reader to read the data
+            
             string passCompare = ""; // Variable to store the password from the DataBase
             UserType result = UserType.Unknown; // Variable to store the result of this method
 
             conn.Open(); // Open the connection to execute the Student Select
-            drStudent = getStudent.ExecuteReader(); // Execute the command and attach to the reader 
+            dr = command.ExecuteReader(); // Execute the command and attach to the reader 
 
-            // Check if there are rows
-            if (drStudent.HasRows)
+            // Because I've put the select from Student First. I will check for student
+            // Check if there are rows in the Student Select
+            if (dr.HasRows)
             {
                 // If so, get the password in the database
-                while (drStudent.Read())
+                while (dr.Read())
                 {
                     // Get the password from DataBase
-                    passCompare = drStudent.GetString("Password");
+                    passCompare = dr.GetString("Password");
                 }
                 if (passCompare == pass) { result = UserType.Student; }
             }
-
-            conn.Close();// Close the connection for the Student select
-
-            conn.Open(); // Open the connection for the Staff select
-            drStaff = getStaff.ExecuteReader(); // Execute the command and attach to the reader
-
-            // Check if there are rows
-            if (drStaff.HasRows) {
-
-                // If so, get the password in the database
-                while (drStaff.Read())
-                {
-                    // Get the password from DataBase
-                    passCompare = drStaff.GetString("Password");
+            else {
+                // If there are no rows in the Student, check the Staff select using the NextResult() method
+                // Make sure that there is more results
+                if (dr.NextResult()) {
+                    // Check if there are rows in the new result
+                    if (dr.HasRows) {
+                        while (dr.Read())
+                        {
+                            // Get the password from DataBase
+                            passCompare = dr.GetString("Password");
+                        }
+                        if (passCompare == pass) { result = UserType.Staff; }
+                    }
                 }
-                if (passCompare == pass) { result = UserType.Staff; }
-            }
 
-            conn.Close();// Close the connection for the Staff
+
+            }
 
             return result; // Return the result
         }
