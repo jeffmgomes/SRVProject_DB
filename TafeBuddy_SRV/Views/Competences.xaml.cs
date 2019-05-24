@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,8 +25,10 @@ namespace TafeBuddy_SRV.Views
     /// </summary>
     public sealed partial class Competences : Page
     {
-        private List<Competence> Core = new List<Competence>();
-        private List<Competence> Elective = new List<Competence>();
+        private ObservableCollection<Competence> Core = new ObservableCollection<Competence>();
+        private ObservableCollection<Competence> Elective = new ObservableCollection<Competence>();
+        private string studentID;
+        private string qualID;
 
         public Competences()
         {
@@ -37,9 +40,18 @@ namespace TafeBuddy_SRV.Views
             if (e.Parameter != null)
             {
                 string[] parameter = (string[])e.Parameter;
-                string studentID = parameter[0];
-                string qualID = parameter[1];
-                AddCompetences(studentID, qualID);
+                studentID = parameter[0];
+                qualID = parameter[1];
+
+                int areaOfStudyIndex = int.Parse(parameter[2]);
+                int qualificationIndex = int.Parse(parameter[3]);
+
+                PopulateAreasOfStudy(studentID);
+                PopulateQualification(studentID);
+
+                areaOfStudcomboBox.SelectedIndex = areaOfStudyIndex;
+                comboBox.SelectedIndex = qualificationIndex;
+                
             }
         }
 
@@ -73,6 +85,14 @@ namespace TafeBuddy_SRV.Views
 
             dr = command.ExecuteReader(); // Execute the command and attach to the reader
 
+            if (Core.Count > 0) {
+                Core.Clear();
+            }
+
+            if (Elective.Count > 0) {
+                Elective.Clear();
+            }
+
             // While there are rows in the read
             while (dr.Read())
             {
@@ -85,13 +105,129 @@ namespace TafeBuddy_SRV.Views
                 {
                     Elective.Add(i);
                 }
+
+                if (!dr.IsDBNull(dr.GetOrdinal("Login")))
+                {
+                    studentIDtxtblk2.Text = dr.GetString("Login");
+                    studNametxtblk2.Text = dr.GetString("FirstName") + " " + dr.GetString("LastName");
+                }
+            }
+
+
+            // Close the connection
+            conn.Close();
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Login));
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the Type of the Last page to know what to return
+            Type previousPageType = Frame.BackStack.Last().SourcePageType;
+            if (previousPageType == typeof(Student)) {
+                Frame.Navigate(typeof(Student), new string[] { studentIDtxtblk2.Text, areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString() });
+            }
+            if (previousPageType == typeof(Admin)) {
+                Frame.Navigate(typeof(Admin), new string[] { studentID, studentIDtxtblk2.Text, areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString()});
+            }
+            
+        }
+
+        public void PopulateAreasOfStudy(string studentID)
+        {
+
+            // Creates the connection
+            MySqlConnection conn = new MySqlConnection(App.connectionString);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("select distinct a.AreasOfStudyID, a.Name from Person p ");
+            sb.Append("inner join student s on p.personid = s.PersonID ");
+            sb.Append("inner join student_qualification sq on s.StudentID = sq.StudentID ");
+            sb.Append("inner join qualification q on sq.QualificationID = q.QualificationID ");
+            sb.Append("inner join areasofstudy a on q.AreasOfStudyID = a.AreasOfStudyID ");
+            sb.Append("WHERE s.studentID = '").Append(studentID).Append("' ");
+            
+            // Creates the SQL command
+            MySqlCommand command = new MySqlCommand(sb.ToString(), conn);
+
+            MySqlDataReader dr; // Creates a reader to read the data
+
+            conn.Open(); // Open the connection
+
+            dr = command.ExecuteReader(); // Execute the command and attach to the reader
+
+            areaOfStudcomboBox.Items.Clear(); // Clear all the items
+
+            // While there are rows in the read
+            while (dr.Read())
+            {
+                // Add an item in the Combobox
+                areaOfStudcomboBox.Items.Add(new Item(dr.GetString("AreasOfStudyID"), dr.GetString("Name")));
             }
 
             // Close the connection
             conn.Close();
         }
+
+        public void PopulateQualification(string studentID, string area = "")
+        {
+            // Creates the connection
+            MySqlConnection conn = new MySqlConnection(App.connectionString);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("select distinct q.QualificationID, q.NationalTitle from Person p ");
+            sb.Append("inner join student s on p.personid = s.PersonID ");
+            sb.Append("inner join student_qualification sq on s.StudentID = sq.StudentID ");
+            sb.Append("inner join qualification q on sq.QualificationID = q.QualificationID ");
+            sb.Append("inner join areasofstudy a on q.AreasOfStudyID = a.AreasOfStudyID ");
+            sb.Append("WHERE (s.studentID = '").Append(studentID).Append("' ");
+            sb.Append(") ");
+
+            if (!String.IsNullOrEmpty(area))
+            {
+                sb.Append(" AND a.AreasOfStudyID = '").Append(area).Append("' ");
+            }
+
+            // Creates the SQL command
+            MySqlCommand command = new MySqlCommand(sb.ToString(), conn);
+
+            MySqlDataReader dr; // Creates a reader to read the data
+
+            conn.Open(); // Open the connection
+
+            dr = command.ExecuteReader(); // Execute the command and attach to the reader
+
+            comboBox.Items.Clear(); // Clear all the items
+            // While there are rows in the read
+            while (dr.Read())
+            {
+                // Add an item in the Combobox
+                comboBox.Items.Add(new Item(dr.GetString("QualificationID"), dr.GetString("NationalTitle")));
+            }
+
+            // Close the connection
+            conn.Close();
+        }
+
+        private void AreaOfStudcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PopulateQualification(studentID, ((Item)areaOfStudcomboBox.SelectedItem).Id);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddCompetences(studentID, ((Item)comboBox.SelectedItem).Id);
+        }
     }
 
+
+
+
+
+    // Class to handle the list of competences
     class Competence
     {
         public bool Marked;
@@ -101,7 +237,7 @@ namespace TafeBuddy_SRV.Views
 
         public Competence(string situation, string code, string desc)
         {
-            this.Marked = situation == "Pass";
+            this.Marked = situation == "Pass"; // If the compentence is marked as Pass the checkbox will be marked
             this.Code = code;
             this.Description = desc;
             this.Result = situation;

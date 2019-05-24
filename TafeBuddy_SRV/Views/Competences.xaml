@@ -14,12 +14,12 @@
         <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
             <AppBarButton
                 Label="Main Page"
-                Icon="Home" Foreground="White">
+                Icon="Home" Foreground="White" Click="AppBarButton_Click">
             </AppBarButton>
             <AppBarButton
                 x:Name="backBtn"
                 Label="Back"
-                Icon="Back" Foreground="White" >
+                Icon="Back" Foreground="White" Click="BackBtn_Click">
             </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
@@ -54,50 +54,19 @@
 
                     <!--StudentID-->
                     <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
-                    <TextBlock x:Name="studentIDtxtblk2" TextWrapping="Wrap" Text="001061267"  Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" />
+                    <TextBlock x:Name="studentIDtxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" />
 
                     <!--Student Name-->
                     <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
-                    <TextBlock x:Name="studNametxtblk2" Text="Kathryn Fieg"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" />
+                    <TextBlock x:Name="studNametxtblk2"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" />
 
                     <!--Area of Study-->
-                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
-                    <!--<TextBox x:Name="areaOfStudtxtbk2" Text="Software Development"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Information Technology" >
-                        <ComboBoxItem Content="Arts and Design" />
-                        <ComboBoxItem Content="Building and Construction" />
-                        <ComboBoxItem Content="Business and Marketing" />
-                        <ComboBoxItem Content="Community Services" />
-                        <ComboBoxItem Content="Education and Languages" />
-                        <ComboBoxItem Content="Government, Property and Legal" />
-                        <ComboBoxItem Content="Hair and Beauty" />
-                        <ComboBoxItem Content="Health and Lifestyle" />
-                        <ComboBoxItem Content="Hospitality and Tourism" />
-                        <ComboBoxItem Content="Information Technology" />
-                        <ComboBoxItem Content="Mining, Engineering and Automotive" />
-                        <ComboBoxItem Content="Primary Industries and Science" />
-                    </ComboBox>
+                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>                    
+                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Information Technology" SelectionChanged="AreaOfStudcomboBox_SelectionChanged" ></ComboBox>
 
                     <!--Qualification-->
-                    <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
-                    <!--<TextBox x:Name="qualificationtxtbkl2" TextWrapping="Wrap" Text="Diploma of Software Development"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Diploma of Software Development">
-                        <ComboBoxItem Content="Certificate I in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate II in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate III in Information, Digital Media and Technology" />
-                        <ComboBoxItem Content="Certificate IV in Digital Media Technologies" />
-                        <ComboBoxItem Content="Certificate IV in Program in Information Technology" />
-                        <ComboBoxItem Content="Certificate IV in Information Technology Networking" />
-                        <ComboBoxItem Content="Certificate IV in Cyber Security" />
-                        <ComboBoxItem Content="Certificate IV in Programming" />
-                        <ComboBoxItem Content="Certificate IV in Web-Based Technologies" />
-                        <ComboBoxItem Content="Diploma of Software Development" />
-                        <ComboBoxItem Content="Diploma of Information Technology Networking" />
-                        <ComboBoxItem Content="Diploma of Website Development" />
-                        <ComboBoxItem Content="Diploma of Digital Media Technologies" />
-                        <ComboBoxItem Content="Advanced Diploma in Computer Systems Technology" />
-                        <ComboBoxItem Content="Advanced Diploma in Network Security" />
-                    </ComboBox>
+                    <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>                    
+                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Diploma of Software Development" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
 
                 </Grid>
             </StackPanel>
@@ -105,11 +74,11 @@
             <ScrollViewer HorizontalAlignment="Center" Width="370" Height="400"  VerticalScrollBarVisibility="Hidden" Margin="0,20,0,10" >
                 <StackPanel>
                     <TextBlock TextWrapping="Wrap" Text="Core" FontWeight="Bold"  Margin="0,0,0,10" />
-                    <ListView ItemsSource="{x:Bind Core}">
+                    <ListView ItemsSource="{x:Bind Core}" x:DefaultBindMode="TwoWay" x:Name="mylist">
                         <ListView.ItemTemplate>
                             <DataTemplate x:Name="myTemplate1" x:DataType="local:Competence">
                                 <StackPanel Orientation="Horizontal" Height="30" AutomationProperties.Name="{x:Bind Code}">
-                                    <CheckBox IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center"/>                                    
+                                    <CheckBox x:Name="coreCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>                                    
                                     <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0"/>
                                     <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="10,0,0,0"/>
                                 </StackPanel>
@@ -121,8 +90,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:Name="myTemplate2" x:DataType="local:Competence">
                                 <StackPanel Orientation="Horizontal" Height="30" Padding="3" AutomationProperties.Name="{x:Bind Code}">
-                                    <CheckBox IsChecked="{x:Bind Marked}"/>
-                                    <TextBlock Text="{x:Bind Code}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0,0,0,0"/>
+                                    <CheckBox x:Name="electiveCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>                                    
                                     <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0,0,0,0"/>
                                     <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0,0,0,0"/>
                                 </StackPanel>

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MySql.Data.MySqlClient;
 using System.Text;
+using System.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -48,17 +49,25 @@ namespace TafeBuddy_SRV.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //base.OnNavigatedTo(e);
-            User = e.Parameter.ToString();
+            if (e.Parameter != null) {
+                string[] parameter = (string[])e.Parameter;
 
-            PopulateAreasOfStudy();
-            PopulateQualification();
-            PopulateUser();
+                User = parameter[0];
 
-            areaOfStudcomboBox.SelectedIndex = 0; // Select the first item the list
-            comboBox.SelectedIndex = 0; // Select the first item in the list
+                PopulateAreasOfStudy();
+                PopulateQualification();
+                PopulateUser();
 
-            StudentResult();
+                if (parameter.Count() > 1) {
+                    areaOfStudcomboBox.SelectedIndex = int.Parse(parameter[1]);
+                    comboBox.SelectedIndex = int.Parse(parameter[2]);
+                } else {
+                    areaOfStudcomboBox.SelectedIndex = 0; // Select the first item the list
+                    comboBox.SelectedIndex = 0; // Select the first item in the list
+                }
+
+                StudentResult();
+            }            
         }
 
         public void PopulateAreasOfStudy()
@@ -253,8 +262,9 @@ namespace TafeBuddy_SRV.Views
 
             // Calculates the Percentage
             double percent = 0;
-            percent = ((double)marked / (double)rowsCount) * 100;
-            myProgressBar.Value = percent; // Updates the progressbar value
+            percent = ((double)marked / (double)rowsCount);
+            progressPercent.Value = percent * 100; // Updates the progressbar value            
+            txtProgressPercent.Text = percent.ToString("P0");
         }
 
         private void AreaOfStudcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -275,7 +285,7 @@ namespace TafeBuddy_SRV.Views
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Competences),new string[] {StudentID, ((Item)comboBox.SelectedItem).Id });
+            Frame.Navigate(typeof(Competences),new string[] {StudentID, ((Item)comboBox.SelectedItem).Id , areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString()});
         }
     }
 }

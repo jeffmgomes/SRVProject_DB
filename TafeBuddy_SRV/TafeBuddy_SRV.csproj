@@ -132,9 +132,6 @@
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Splashscreen.xaml.cs">
-      <DependentUpon>Splashscreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Student.xaml.cs">
       <DependentUpon>Student.xaml</DependentUpon>
     </Compile>
@@ -152,6 +149,7 @@
     <Content Include="Images\logo1.png" />
     <Content Include="Images\logo2.png" />
     <Content Include="Images\logo3.png" />
+    <Content Include="Images\pbCentre.png" />
     <Content Include="Images\userIcon.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -180,10 +178,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Splashscreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

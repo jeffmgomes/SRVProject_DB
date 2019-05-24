@@ -21,34 +21,8 @@
             </StackPanel>
 
             <!--Login content-->
-
-
             <StackPanel HorizontalAlignment="Center" Margin="0,70,0,0" Width="380">
                 <TextBlock x:Name="LoginTextBlock" TextWrapping="Wrap" Text="Sign in with your organizational account" Margin="0,0,0,40" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <!--<Grid HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="90" />
-                        <ColumnDefinition Width="270" />
-                    </Grid.ColumnDefinitions>
-
-                    -->
-                <!--username-->
-                <!--
-                    <TextBlock x:Name="usertextBlock" TextWrapping="Wrap" Text="Username:"  Grid.Column="0" Grid.Row="0" />
-                    <TextBox x:Name="usernameTextBox" TextWrapping="Wrap" Text=""  Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" PlaceholderText="someone@example.com"/>
-
-                    -->
-                <!--password-->
-                <!--
-                    <TextBlock x:Name="paswordtextBlock" TextWrapping="Wrap" Text="Password:" Grid.Column="0" Grid.Row="1"/>
-                    <PasswordBox x:Name="passwordTextBox"  Grid.Column="1" Grid.Row="1" PlaceholderText="Password"/>
-                </Grid>-->
-
                 <!--username-->
                 <TextBox x:Name="usernameTextBox" TextWrapping="Wrap" Text=""  Margin="0,0,0,10" PlaceholderText="someone@example.com"/>
                 <!--password-->

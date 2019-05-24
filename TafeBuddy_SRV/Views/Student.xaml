@@ -31,11 +31,19 @@
 
             <!--Check my progress-->
             <TextBlock x:Name="checkMyProgresstxtblk" TextWrapping="Wrap" Text="Check my Progress" FontSize="24" HorizontalAlignment="Center" Margin="0,50,0,0" FontWeight="Bold"/>
-
+            
             <!--Progress Bar-->
-            <controls:RadialProgressBar x:Name="myProgressBar" Value="70" Minimum="0" Maximum="100" Background="White" Thickness="14" Foreground="Black" Outline="Gray" Height="200" Width="200"/>
-
-
+            <Canvas x:Name="canvasPercent" HorizontalAlignment="Center" Margin="0,10,140,140">
+                <controls:RadialProgressBar x:Name="progressPercent"
+                    Value="75" Minimum="0" Maximum="100"
+                    Thickness="35" Outline="White" Foreground="#ac2d36" Width="130" Height="130">
+                </controls:RadialProgressBar>
+                <Image x:Name="progressBarInsert" Source="ms-appx:///Images/pbCentre.png" 
+                           Height="90" Width="90"
+                           Canvas.Left="20" Canvas.Top="20"/>
+                <TextBlock x:Name="txtProgressPercent" Foreground="White" FontSize="30px" FontFamily="Arial" Width="130" Height="32" TextAlignment="Center" Canvas.Top="48"/>
+            </Canvas>
+            
             <!--Student Details-->
             <StackPanel >
                 <Grid HorizontalAlignment="Center">
@@ -46,8 +54,7 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <!--<RowDefinition Height="auto" />-->
+                        <RowDefinition Height="auto" />                        
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
@@ -56,50 +63,42 @@
 
                     <!--StudentID-->
                     <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
-                    <TextBox x:Name="studentIDtxtblk2" TextWrapping="Wrap" Text="001061267"  Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" IsReadOnly="True"/>
+                    <TextBox x:Name="studentIDtxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" IsReadOnly="True"/>
 
                     <!--Student Name-->
                     <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
-                    <TextBox x:Name="studNametxtblk2" Text="Kathryn Fieg"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" IsReadOnly="True"/>
+                    <TextBox x:Name="studNametxtblk2" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" IsReadOnly="True"/>
 
                     <!--Area of Study-->
-                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
-                    <!--<TextBox x:Name="areaOfStudtxtbk2" Text="Information Technology"  Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,5" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="AreaOfStudcomboBox_SelectionChanged">                    </ComboBox>
+                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>                    
+                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,5" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="AreaOfStudcomboBox_SelectionChanged"></ComboBox>
 
                     <!--Qualification-->
                     <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
-                    <!--<TextBox x:Name="qualificationtxtbkl2" TextWrapping="Wrap" Text="Diploma of Software Development"  Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" IsReadOnly="True"/>-->
-                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="ComboBox_SelectionChanged">
-                         
-                    </ComboBox>
+                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
 
                     <!--TAFE Code-->
                     <TextBlock x:Name="tafeCodetxtblk" TextWrapping="Wrap" Text="TAFE Code:" Grid.Column="0" Grid.Row="4" FontWeight="Bold"/>
-                    <TextBox x:Name="tafeCodetxtblk2" TextWrapping="Wrap" Text="TP00750"  Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" IsReadOnly="True"/>
+                    <TextBox x:Name="tafeCodetxtblk2" TextWrapping="Wrap"  Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" IsReadOnly="True"/>
 
                     <!--National Code-->
                     <TextBlock x:Name="nationalCodetxtblk" TextWrapping="Wrap" Text="National Code:" Grid.Column="0" Grid.Row="5" FontWeight="Bold"/>
-                    <TextBox x:Name="nationalCodetxtblk2" TextWrapping="Wrap" Text="ICT50715"  Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" IsReadOnly="True"/>
+                    <TextBox x:Name="nationalCodetxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" IsReadOnly="True"/>
 
                     <!--Unit-->
                     <TextBlock x:Name="unitstxtblk" TextWrapping="Wrap" Text="Units:" Grid.Column="0" Grid.Row="6" FontWeight="Bold"/>
-                    <TextBox x:Name="unitstxtblk2" TextWrapping="Wrap" Text="16 Units - 10 core, 6 electives"  Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" IsReadOnly="True"/>
+                    <TextBox x:Name="unitstxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" IsReadOnly="True"/>
 
 
                 </Grid>
 
                 <!--Buttons-->
-                <StackPanel Margin="0,20,0,0">
-                    <!--<Button x:Name="detailsButton" Content="My Competencies" HorizontalAlignment="Center" Width="160" Click="detailsButton_Click" />-->
+                <StackPanel Margin="0,20,0,0">                    
                     <HyperlinkButton Content="Click to view Checklist" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="HyperlinkButton_Click" />
-
                 </StackPanel>
 
-
             </StackPanel>
-
-
+            
         </StackPanel>
 
     </Grid>

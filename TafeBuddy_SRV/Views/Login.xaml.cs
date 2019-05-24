@@ -118,7 +118,7 @@ namespace TafeBuddy_SRV.Views
 
             if (result == UserType.Student)
             {
-                Frame.Navigate(typeof(Student),user);                
+                Frame.Navigate(typeof(Student),new string[] { user });                
             }
             else if (result == UserType.Staff) {
                 Frame.Navigate(typeof(Admin));
