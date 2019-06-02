@@ -265,6 +265,15 @@ namespace TafeBuddy_SRV.Views
             percent = ((double)marked / (double)rowsCount);
             progressPercent.Value = percent * 100; // Updates the progressbar value            
             txtProgressPercent.Text = percent.ToString("P0");
+
+            //Display parchment link
+            if (percent == 1)
+            {
+                parchmentLink.Visibility = Visibility.Visible;
+            }
+            else {
+                parchmentLink.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void AreaOfStudcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -286,6 +295,19 @@ namespace TafeBuddy_SRV.Views
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Competences),new string[] {StudentID, ((Item)comboBox.SelectedItem).Id , areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString()});
+        }
+
+        private async void ParchmentLink_Click(object sender, RoutedEventArgs e)
+        {
+            // The URI to launch
+            var uriBing = new Uri(@"https://www.tafesa.edu.au/services/parchments-results");
+
+            // Set the option to show a warning
+            var promptOptions = new Windows.System.LauncherOptions();
+            promptOptions.TreatAsUntrusted = true;
+
+            // Launch the URI
+            var success = await Windows.System.Launcher.LaunchUriAsync(uriBing, promptOptions);
         }
     }
 }

@@ -95,6 +95,7 @@
                 <!--Buttons-->
                 <StackPanel Margin="0,20,0,0">                    
                     <HyperlinkButton Content="Click to view Checklist" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="HyperlinkButton_Click" />
+                    <HyperlinkButton x:Name="parchmentLink" Content="Request Parchment" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Collapsed" Click="ParchmentLink_Click"/>
                 </StackPanel>
 
             </StackPanel>
