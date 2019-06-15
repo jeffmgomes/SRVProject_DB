@@ -12,10 +12,10 @@
     <!--Page Bar-->
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
-            <AppBarButton
+            <!--<AppBarButton
                 Label="Main Page"
                 Icon="Home" Foreground="White" Click="AppBarButton_Click">
-            </AppBarButton>
+            </AppBarButton>-->
             <AppBarButton
                 x:Name="backBtn"
                 Label="Back"
@@ -28,71 +28,98 @@
 
         <StackPanel>
             <!--Header-->
-            <StackPanel Background="#FFBE1428" Padding="10" Orientation="Horizontal" BorderThickness="0,0,0,5" BorderBrush="Black"  >
-                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right"/>
-                <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Right" />
+            <Grid Background="#FFBE1428" Padding="10" BorderThickness="0,0,0,5" BorderBrush="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <!-- Logo -->
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock" VerticalAlignment="Center" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right" Margin="0,0,0,0"/>
+                    <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Left" />
+                </StackPanel>
+                <!-- Logout -->
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <StackPanel>
+                        <TextBlock x:Name="welcomeTxtBlock" Foreground="White" />
+                    </StackPanel>
+                    <HyperlinkButton Name="logoutHyperlink" Content="Logout" HorizontalAlignment="Right"  Margin="0,-6,0,0" Foreground="White" FontWeight="SemiBold" FontSize="12" Click="LogoutHyperlink_Click" />
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Background="#FFF6F6F6" Padding="0,0,0,20">
+                <!--Title-->
+                <StackPanel  Margin="0,20,0,20">
+                    <TextBlock Text="My Competency Checklist" FontSize="24" HorizontalAlignment="Center" FontWeight="Bold" />
+                </StackPanel>
+
+                <!--Student Description-->
+                <StackPanel HorizontalAlignment="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="310" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--StudentID-->
+                        <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
+                        <TextBlock x:Name="studentIDtxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" />
+
+                        <!--Student Name-->
+                        <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
+                        <TextBlock x:Name="studNametxtblk2"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" />
+
+                        <!--Area of Study-->
+                        <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
+                        <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Information Technology" SelectionChanged="AreaOfStudcomboBox_SelectionChanged" ></ComboBox>
+
+                        <!--Qualification-->
+                        <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
+                        <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Diploma of Software Development" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
+
+                    </Grid>
+                </StackPanel>
             </StackPanel>
 
-            <!--Title-->
-            <StackPanel Margin="0,20,0,20">
-                <TextBlock Text="My Competency Checklist" FontSize="24" HorizontalAlignment="Center" FontWeight="Bold" />
-            </StackPanel>
-
-            <!--Student Description-->
-            <StackPanel HorizontalAlignment="Center">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="250" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <!--StudentID-->
-                    <TextBlock x:Name="studentIDtxtblk" TextWrapping="Wrap" Text="Student ID:"  Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
-                    <TextBlock x:Name="studentIDtxtblk2" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" />
-
-                    <!--Student Name-->
-                    <TextBlock x:Name="studNametxtblk" TextWrapping="Wrap" Text="Student Name:" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
-                    <TextBlock x:Name="studNametxtblk2"  Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" />
-
-                    <!--Area of Study-->
-                    <TextBlock x:Name="areaOfStudtxtbkl" TextWrapping="Wrap" Text="Area Of Study:" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>                    
-                    <ComboBox x:Name="areaOfStudcomboBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Information Technology" SelectionChanged="AreaOfStudcomboBox_SelectionChanged" ></ComboBox>
-
-                    <!--Qualification-->
-                    <TextBlock x:Name="qualificationtxtbkl" TextWrapping="Wrap" Text="Qualification:" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>                    
-                    <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" HorizontalAlignment="Stretch" PlaceholderText="Diploma of Software Development" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
-
-                </Grid>
-            </StackPanel>
-
-            <ScrollViewer HorizontalAlignment="Center" Width="370" Height="400"  VerticalScrollBarVisibility="Hidden" Margin="0,20,0,10" >
-                <StackPanel>
+            <ScrollViewer HorizontalAlignment="Center" Height="300"  VerticalScrollBarVisibility="Hidden" Margin="0,10,0,0" >
+                <StackPanel Width="430">
                     <TextBlock TextWrapping="Wrap" Text="Core" FontWeight="Bold"  Margin="0,0,0,10" />
-                    <ListView ItemsSource="{x:Bind Core}" x:DefaultBindMode="TwoWay" x:Name="mylist">
+                    <!--CORE COMPETENCIES-->
+                    <ListView ItemsSource="{x:Bind Core}" x:DefaultBindMode="TwoWay" x:Name="mylist" >
                         <ListView.ItemTemplate>
                             <DataTemplate x:Name="myTemplate1" x:DataType="local:Competence">
-                                <StackPanel Orientation="Horizontal" Height="30" AutomationProperties.Name="{x:Bind Code}">
-                                    <CheckBox x:Name="coreCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>                                    
-                                    <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0"/>
-                                    <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="10,0,0,0"/>
+                                <StackPanel Orientation="Horizontal" AutomationProperties.Name="{x:Bind Code}"  >
+                                    <StackPanel Width="120">
+                                        <CheckBox x:Name="coreCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="270">
+                                        <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0" FontWeight="SemiBold"  TextWrapping="Wrap"/>
+                                        <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" HorizontalAlignment="Left" FontWeight="Thin"   Margin="10,0,0,0" FocusVisualPrimaryBrush="Black" />
+                                    </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <TextBlock TextWrapping="Wrap" Text="Electives" FontWeight="Bold" Margin="0,20,0,10" />
+                    <!--ELECTIVE COMPETENCIES-->
                     <ListView ItemsSource="{x:Bind Elective}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:Name="myTemplate2" x:DataType="local:Competence">
-                                <StackPanel Orientation="Horizontal" Height="30" Padding="3" AutomationProperties.Name="{x:Bind Code}">
-                                    <CheckBox x:Name="electiveCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>                                    
-                                    <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0,0,0,0"/>
-                                    <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0,0,0,0"/>
+                                <StackPanel Orientation="Horizontal" Padding="3" AutomationProperties.Name="{x:Bind Code}" >
+                                    <StackPanel Width="120">
+                                        <CheckBox x:Name="electiveCheckBox" IsChecked="{x:Bind Marked}" Content="{x:Bind Code}" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="270">
+                                        <TextBlock Text="{x:Bind Description}" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" Margin="0" FontWeight="SemiBold"  TextWrapping="Wrap"/>
+                                        <TextBlock Text="{x:Bind Result}" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" HorizontalAlignment="Left" FontWeight="Thin"   Margin="10,0,0,0" FocusVisualPrimaryBrush="Black"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

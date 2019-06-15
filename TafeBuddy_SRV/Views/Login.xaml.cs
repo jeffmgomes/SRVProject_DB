@@ -59,6 +59,7 @@ namespace TafeBuddy_SRV.Views
             
             string passCompare = ""; // Variable to store the password from the DataBase
             UserType result = UserType.Unknown; // Variable to store the result of this method
+            string userName = "";
 
             conn.Open(); // Open the connection to execute the Student Select
             dr = command.ExecuteReader(); // Execute the command and attach to the reader 
@@ -73,7 +74,10 @@ namespace TafeBuddy_SRV.Views
                     // Get the password from DataBase
                     passCompare = dr.GetString("Password");
                 }
-                if (passCompare == pass) { result = UserType.Student; }
+                if (passCompare == pass) {
+                    result = UserType.Student;
+                    App.userLogged = dr.GetString("FirstName") + " " + dr.GetString("LastName");
+                }
             }
             else {
                 // If there are no rows in the Student, check the Staff select using the NextResult() method
@@ -86,7 +90,10 @@ namespace TafeBuddy_SRV.Views
                             // Get the password from DataBase
                             passCompare = dr.GetString("Password");
                         }
-                        if (passCompare == pass) { result = UserType.Staff; }
+                        if (passCompare == pass) {
+                            result = UserType.Staff;
+                            App.userLogged = dr.GetString("FirstName") + " " + dr.GetString("LastName");
+                        }
                     }
                 }
 

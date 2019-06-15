@@ -10,40 +10,56 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-    <Page.BottomAppBar>
+    <!--<Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
             <AppBarButton
                 Label="Main Page"
                 Icon="Home" Foreground="White" Click="AppBarButton_Click">
             </AppBarButton>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.BottomAppBar>-->
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <StackPanel>
             <!--Header-->
-            <StackPanel Background="#FFBE1428" Padding="10" Orientation="Horizontal" BorderThickness="0,0,0,5" BorderBrush="Black"  >
-                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right"/>
-                <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Right" />
-            </StackPanel>
+            <Grid Background="#FFBE1428" Padding="10" BorderThickness="0,0,0,5" BorderBrush="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <!-- Logo -->
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock" VerticalAlignment="Center" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right" Margin="0,0,0,0"/>
+                    <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Left" />
+                </StackPanel>
+                <!-- Logout -->
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <StackPanel>
+                        <TextBlock x:Name="welcomeTxtBlock" Foreground="White" />
+                    </StackPanel>
+                    <HyperlinkButton Name="logoutHyperlink" Content="Logout" HorizontalAlignment="Right"  Margin="0,-6,0,0" Foreground="White" FontWeight="SemiBold" FontSize="12" Click="LogoutHyperlink_Click" />
+                </StackPanel>
+            </Grid>
 
+            <StackPanel Background="#FFF6F6F6" Padding="0,0,0,20">
+                <!--Check my progress-->
+                <TextBlock x:Name="checkMyProgresstxtblk" TextWrapping="Wrap" Text="Check my Progress" FontSize="24" HorizontalAlignment="Center" Margin="0,50,0,0" FontWeight="Bold"/>
 
-            <!--Check my progress-->
-            <TextBlock x:Name="checkMyProgresstxtblk" TextWrapping="Wrap" Text="Check my Progress" FontSize="24" HorizontalAlignment="Center" Margin="0,50,0,0" FontWeight="Bold"/>
-            
-            <!--Progress Bar-->
-            <Canvas x:Name="canvasPercent" HorizontalAlignment="Center" Margin="0,10,140,140">
-                <controls:RadialProgressBar x:Name="progressPercent"
+                <!--Progress Bar-->
+                <Canvas x:Name="canvasPercent" HorizontalAlignment="Center" Margin="0,10,140,140">
+                    <controls:RadialProgressBar x:Name="progressPercent"
                     Value="75" Minimum="0" Maximum="100"
                     Thickness="35" Outline="White" Foreground="#ac2d36" Width="130" Height="130">
-                </controls:RadialProgressBar>
-                <Image x:Name="progressBarInsert" Source="ms-appx:///Images/pbCentre.png" 
+                    </controls:RadialProgressBar>
+                    <Image x:Name="progressBarInsert" Source="ms-appx:///Images/pbCentre.png" 
                            Height="90" Width="90"
                            Canvas.Left="20" Canvas.Top="20"/>
-                <TextBlock x:Name="txtProgressPercent" Foreground="White" FontSize="30px" FontFamily="Arial" Width="130" Height="32" TextAlignment="Center" Canvas.Top="48"/>
-            </Canvas>
-            
+                    <TextBlock x:Name="txtProgressPercent" Foreground="White" FontSize="30px" FontFamily="Arial" Width="130" Height="32" TextAlignment="Center" Canvas.Top="48"/>
+                </Canvas>
+            </StackPanel>
+
             <!--Student Details-->
             <StackPanel >
                 <Grid HorizontalAlignment="Center">

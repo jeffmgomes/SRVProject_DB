@@ -23,6 +23,7 @@ namespace TafeBuddy_SRV
     sealed partial class App : Application
     {
         public static string connectionString = "server = localhost; user id = root; password = mysql; database = srvdb";
+        public static string userLogged = ""; // Variable to know which user is logged
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

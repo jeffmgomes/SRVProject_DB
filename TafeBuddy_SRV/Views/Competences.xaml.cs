@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,7 @@ namespace TafeBuddy_SRV.Views
         public Competences()
         {
             this.InitializeComponent();
+            welcomeTxtBlock.Text = "Welcome, " + App.userLogged; // Show user logged
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -50,8 +52,7 @@ namespace TafeBuddy_SRV.Views
                 PopulateQualification(studentID);
 
                 areaOfStudcomboBox.SelectedIndex = areaOfStudyIndex;
-                comboBox.SelectedIndex = qualificationIndex;
-                
+                comboBox.SelectedIndex = qualificationIndex;                
             }
         }
 
@@ -118,10 +119,10 @@ namespace TafeBuddy_SRV.Views
             conn.Close();
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Login));
-        }
+        //private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Frame.Navigate(typeof(Login));
+        //}
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -220,6 +221,30 @@ namespace TafeBuddy_SRV.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddCompetences(studentID, ((Item)comboBox.SelectedItem).Id);
+        }
+
+        private async void LogoutHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog showDialog = new MessageDialog("Are you sure you want to logout?");
+            showDialog.Commands.Add(new UICommand("Continue")
+            {
+                Id = 0
+            });
+            showDialog.Commands.Add(new UICommand("Cancel")
+            {
+                Id = 1
+            });
+            showDialog.DefaultCommandIndex = 0;
+            showDialog.CancelCommandIndex = 1;
+            var result = await showDialog.ShowAsync();
+            if ((int)result.Id == 0)
+            {
+                Frame.Navigate(typeof(Views.Login));
+            }
+            else
+            {
+                return;
+            }
         }
     }
 

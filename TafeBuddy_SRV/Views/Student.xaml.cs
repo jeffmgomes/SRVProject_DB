@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using MySql.Data.MySqlClient;
 using System.Text;
 using System.Globalization;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -45,11 +46,13 @@ namespace TafeBuddy_SRV.Views
         public Student()
         {
             this.InitializeComponent();
+            welcomeTxtBlock.Text = "Welcome, " + App.userLogged; // Show user logged
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter != null) {
+            if (e.Parameter != null)
+            {
                 string[] parameter = (string[])e.Parameter;
 
                 User = parameter[0];
@@ -58,16 +61,19 @@ namespace TafeBuddy_SRV.Views
                 PopulateQualification();
                 PopulateUser();
 
-                if (parameter.Count() > 1) {
+                if (parameter.Count() > 1)
+                {
                     areaOfStudcomboBox.SelectedIndex = int.Parse(parameter[1]);
                     comboBox.SelectedIndex = int.Parse(parameter[2]);
-                } else {
+                }
+                else
+                {
                     areaOfStudcomboBox.SelectedIndex = 0; // Select the first item the list
                     comboBox.SelectedIndex = 0; // Select the first item in the list
                 }
-
+                welcomeTxtBlock.Text = "Welcome, " + App.userLogged; // Show user logged
                 StudentResult();
-            }            
+            }
         }
 
         public void PopulateAreasOfStudy()
@@ -205,18 +211,20 @@ namespace TafeBuddy_SRV.Views
                 nationalCodetxtblk2.Text = dr.GetString("NationalCode");
             }
 
-            if (dr.NextResult()) {
+            if (dr.NextResult())
+            {
                 while (dr.Read())
                 {
                     unitstxtblk2.Text = dr.GetString("NumTotalUnits") + " Units - " + dr.GetString("NumCoreUnits") + " core, " + dr.GetString("NumElectiveUnits") + " electives";
                 }
             }
-            
+
             // Close the connection
             conn.Close();
         }
 
-        public void StudentResult() {
+        public void StudentResult()
+        {
             // Creates the connection
             MySqlConnection conn = new MySqlConnection(App.connectionString);
 
@@ -252,9 +260,10 @@ namespace TafeBuddy_SRV.Views
             {
                 rowsCount += 1;
                 string situation = dr.GetString("Situation");
-                if (situation == "Pass") {
+                if (situation == "Pass")
+                {
                     marked += 1;
-                }                
+                }
             }
 
             // Close the connection
@@ -271,7 +280,8 @@ namespace TafeBuddy_SRV.Views
             {
                 parchmentLink.Visibility = Visibility.Visible;
             }
-            else {
+            else
+            {
                 parchmentLink.Visibility = Visibility.Collapsed;
             }
         }
@@ -287,14 +297,14 @@ namespace TafeBuddy_SRV.Views
             StudentResult();
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Login));
-        }
+        //private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Frame.Navigate(typeof(Login));
+        //}
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Competences),new string[] {StudentID, ((Item)comboBox.SelectedItem).Id , areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString()});
+            Frame.Navigate(typeof(Competences), new string[] { StudentID, ((Item)comboBox.SelectedItem).Id, areaOfStudcomboBox.SelectedIndex.ToString(), comboBox.SelectedIndex.ToString() });
         }
 
         private async void ParchmentLink_Click(object sender, RoutedEventArgs e)
@@ -308,6 +318,30 @@ namespace TafeBuddy_SRV.Views
 
             // Launch the URI
             var success = await Windows.System.Launcher.LaunchUriAsync(uriBing, promptOptions);
+        }
+
+        private async void LogoutHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog showDialog = new MessageDialog("Are you sure you want to logout?");
+            showDialog.Commands.Add(new UICommand("Continue")
+            {
+                Id = 0
+            });
+            showDialog.Commands.Add(new UICommand("Cancel")
+            {
+                Id = 1
+            });
+            showDialog.DefaultCommandIndex = 0;
+            showDialog.CancelCommandIndex = 1;
+            var result = await showDialog.ShowAsync();
+            if ((int)result.Id == 0)
+            {
+                Frame.Navigate(typeof(Views.Login));
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

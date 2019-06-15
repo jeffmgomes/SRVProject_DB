@@ -9,27 +9,42 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.BottomAppBar>
+    <!--<Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact" IsSticky="True" Background="Black" Foreground="White" >
             <AppBarButton
                 Label="Main Page"
                 Icon="Home" Foreground="White" Click="AppBarButton_Click">
             </AppBarButton>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.BottomAppBar>-->
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <!--Main stackpanel-->
         <StackPanel>
             <!--Header-->
-            <StackPanel Background="#FFBE1428" Padding="10" Orientation="Horizontal" BorderThickness="0,0,0,5" BorderBrush="Black"  >
-                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right"/>
-                <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Right" />
-            </StackPanel>
-
-            <!--Check Student progress title-->
-            <TextBlock x:Name="checkMyProgresstxtblk" 
+            <Grid Background="#FFBE1428" Padding="10" BorderThickness="0,0,0,5" BorderBrush="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <!-- Logo -->
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock" VerticalAlignment="Center" TextWrapping="Wrap" Text="TAFE Buddy" Foreground="White" FontFamily="Impact" FontSize="24" HorizontalAlignment="Right" Margin="0,0,0,0"/>
+                    <Image x:Name="image" Source="ms-appx:///Images/logo1.png" Height="23" HorizontalAlignment="Left" />
+                </StackPanel>
+                <!-- Logout -->
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <StackPanel>
+                        <TextBlock x:Name="welcomeTxtBlock" Foreground="White" />
+                    </StackPanel>
+                    <HyperlinkButton Name="logoutHyperlink" Content="Logout" HorizontalAlignment="Right"  Margin="0,-6,0,0" Foreground="White" FontWeight="SemiBold" FontSize="12" Click="LogoutHyperlink_Click" />
+                </StackPanel>
+            </Grid>
+            <StackPanel Padding="0,0,0,20" Background="#FFF6F6F6">
+                <!--Check Student progress title-->
+                <TextBlock x:Name="checkMyProgresstxtblk" 
                        TextWrapping="Wrap" 
                        Text="Check Student Progress" 
                        FontSize="24" 
@@ -37,15 +52,16 @@
                        Margin="0,20,0,30" 
                        FontWeight="Bold"/>
 
-            <!--Seaech Student-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <TextBox x:Name="searchStudTxtbox"
+                <!--Search Student-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <TextBox x:Name="searchStudTxtbox"
                          Text="001061267"
                          Width="200" 
                          Margin="0,0,10,0" />
-                <Button x:Name="searchIdBtn" 
+                    <Button x:Name="searchIdBtn" 
                         Content="Search Id" 
                         Width="100" Click="SearchIdBtn_Click" />
+                </StackPanel>
             </StackPanel>
 
             <!--Progress Bar-->
@@ -61,7 +77,7 @@
             </Canvas>
 
             <!--Student Details-->
-            <StackPanel>
+            <StackPanel Name="studentDetailsStackPanel" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
